@@ -4,9 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test_Creator"
+        xmlns:vm="clr-namespace:Test_Creator.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Test Creator" Height="600" Width="800"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionaries/MainWindowDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainViewModel x:Name="mainViewModel"/>
+    </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Test Creator"
+                   Style="{StaticResource menuTextBar}"
+                   Grid.Row="0"/>
         
+        <Button Style="{StaticResource menuButton}"
+                Grid.Row="1"
+                Content="Create new test"
+                Command="{Binding CreateTest}"/>
+        <Button Style="{StaticResource menuButton}"
+                Grid.Row="2"
+                Content="Edit test"
+                Command="{Binding EditTest}"/>
+
+        <TextBlock Text="by minikowsky"
+                   Style="{StaticResource menuFooter}"
+                   Grid.Row="4"/>
     </Grid>
 </Window>
