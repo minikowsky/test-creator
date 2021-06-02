@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Test_Creator.View.Controls
+namespace Test_Creator.View
 {
     /// <summary>
     /// Interaction logic for QuestionControl.xaml

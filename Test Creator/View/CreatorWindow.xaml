@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:Test_Creator.View"
         
         xmlns:vm="clr-namespace:Test_Creator.ViewModel"
-        xmlns:control="clr-namespace:Test_Creator.View.Controls"
         
         mc:Ignorable="d"
         Title="Test Creator" Height="600" Width="800"
@@ -31,7 +30,7 @@
         
         <TextBox Text="Test title 1" HorizontalAlignment="Left" Grid.Row="0" Style="{StaticResource testName}"/>
         <Button Content="Save" HorizontalAlignment="Right" Grid.Row="0" Style="{StaticResource actionButtons}"/>
-        <control:QuestionControl Grid.Row="1"/>
+        <local:QuestionControl Grid.Row="1"/>
         <TextBlock Text="7/8" Grid.Row="2" Style="{StaticResource questionNumber}"/>
         <Button Content="&lt;" Command="{Binding Previous}" HorizontalAlignment="Left" Grid.Row="3" Style="{StaticResource navigationButtons}"/>
         <Button Content="Delete" Command="{Binding Delete}" HorizontalAlignment="Center" Grid.Row="3" Style="{StaticResource actionButtons}"/>
