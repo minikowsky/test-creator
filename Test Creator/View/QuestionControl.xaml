@@ -21,18 +21,18 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Text="{Binding Question}" Style="{StaticResource question}"/>
+        <TextBox Text="{Binding Question,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource question}"/>
 
-        <RadioButton Grid.Row="1" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer}" CommandParameter="1"/>
-        <TextBox Grid.Row="1" Text="{Binding Answear1}" Style="{StaticResource answer}"/>
+        <RadioButton Grid.Row="1" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="1"/>
+        <TextBox Grid.Row="1" Text="{Binding Answear1,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource answer}"/>
 
-        <RadioButton Grid.Row="2" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer}" CommandParameter="2"/>
-        <TextBox Grid.Row="2" Text="{Binding Answear2}" Style="{StaticResource answer}"/>
+        <RadioButton Grid.Row="2" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="2"/>
+        <TextBox Grid.Row="2" Text="{Binding Answear2,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource answer}"/>
 
-        <RadioButton Grid.Row="3" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer}" CommandParameter="3"/>
-        <TextBox Grid.Row="3" Text="{Binding Answear3}" Style="{StaticResource answer}"/>
+        <RadioButton Grid.Row="3" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="3"/>
+        <TextBox Grid.Row="3" Text="{Binding Answear3,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource answer}"/>
 
-        <RadioButton Grid.Row="4" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer}" CommandParameter="4"/>
-        <TextBox Grid.Row="4" Text="{Binding Answear4}" Style="{StaticResource answer}"/>
+        <RadioButton Grid.Row="4" Style="{StaticResource answerRadioButton}" Command="{Binding CorrectAnswer,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="4"/>
+        <TextBox Grid.Row="4" Text="{Binding Answear4,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource answer}"/>
     </Grid>
 </UserControl>

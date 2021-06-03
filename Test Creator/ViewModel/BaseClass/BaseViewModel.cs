@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicTacToeWPF.ViewModel.BaseClass
+namespace Test_Creator.ViewModel.BaseClass
 {
     // this interface is responsible for notifying view about the changes from model
     class BaseViewModel : INotifyPropertyChanged

@@ -9,7 +9,8 @@
         
         mc:Ignorable="d"
         Title="Test Creator" Height="600" Width="800"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

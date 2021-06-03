@@ -8,5 +8,6 @@ namespace Test_Creator.ViewModel
 {
     class CreatorViewModel
     {
+        public string Text { get; set; }
     }
 }

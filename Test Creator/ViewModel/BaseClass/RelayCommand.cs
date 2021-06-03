@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace TicTacToeWPF.ViewModel.BaseClass
+namespace Test_Creator.ViewModel.BaseClass
 {
     class RelayCommand : ICommand
     {
