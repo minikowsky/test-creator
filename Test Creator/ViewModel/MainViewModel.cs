@@ -12,8 +12,9 @@ using Test_Creator.ViewModel.BaseClass;
 
 namespace Test_Creator.ViewModel
 {
-    class MainViewModel : BaseViewModel
+    class MainViewModel : BaseViewModel, ICloseable
     {
+        
         private ICommand createTest;
         public ICommand CreateTest
         {
@@ -21,9 +22,10 @@ namespace Test_Creator.ViewModel
             {
                 return createTest ?? (createTest = new RelayCommand(
                     p => { Console.WriteLine("Create!");
-                        closeWindow();
+                        
                         var creatorWindow = new View.CreatorWindow();
                         creatorWindow.Show();
+                        this.CloseWindow();
                     },
                     p => true));
             }
@@ -44,10 +46,10 @@ namespace Test_Creator.ViewModel
                             string text = File.ReadAllText(fileDialog.FileName);
                             if (isFileCorrect(text))
                             {
-                                closeWindow();
                                 var creatorWindow = new View.CreatorWindow();
                                 creatorWindow.creatorViewModel.Text = text; 
                                 creatorWindow.Show();
+                                this.CloseWindow();
                             }
                             else
                             {
@@ -62,32 +64,31 @@ namespace Test_Creator.ViewModel
         {
             string[] lines = Regex.Split(text,"[\r\n]+");
             if ((lines.Length - 1) % 6 != 0) return false;
-            Console.WriteLine(lines.Length);
             for (int i = 1; i < lines.Length; i+= 6)
             {
                 int correctAnswers = 0;
                 if (lines[i].Length < 2 || lines[i][lines[i].Length - 1] != '?') return false;
-                Console.WriteLine("2");
                 for (int j = 1; j <= 4; j++)
                 {
                     if (lines[i + j].Length < 3) return false;
-                    Console.WriteLine("3");
                     string s = lines[i + j].Substring(0, 2);
                     if (s != "0|" && s != "1|") return false;
-                    Console.WriteLine("4");
                     if (s[0] == '1') correctAnswers++;
                 }
                 if (correctAnswers != 1) return false;
-                Console.WriteLine("5");
                 if (lines[i + 5] != "**********") return false;
-                Console.WriteLine("6");
 
             }
             return true;
         }
-        private void closeWindow()
+        public Action Close { get; set; }
+        private void CloseWindow()
         {
-            //TODO:
+            Close?.Invoke();
         }
+    }
+    interface ICloseable
+    {
+        Action Close { get; set; }
     }
 }
