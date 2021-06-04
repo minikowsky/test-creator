@@ -47,7 +47,7 @@ namespace Test_Creator.ViewModel
                             if (isFileCorrect(text))
                             {
                                 var creatorWindow = new View.CreatorWindow();
-                                creatorWindow.creatorViewModel.Text = text; 
+                                creatorWindow.creatorViewModel.TestFile = text; 
                                 creatorWindow.Show();
                                 this.CloseWindow();
                             }

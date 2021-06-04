@@ -29,10 +29,10 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         
-        <TextBox Text="Test title 1" HorizontalAlignment="Left" Grid.Row="0" Style="{StaticResource testName}"/>
-        <Button Content="Save" HorizontalAlignment="Right" Grid.Row="0" Style="{StaticResource actionButtons}"/>
+        <TextBox Text="{Binding TestTitle, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="0" Style="{StaticResource testName}"/>
+        <Button Content="Save" Command ="{Binding Save}" HorizontalAlignment="Right" Grid.Row="0" Style="{StaticResource actionButtons}"/>
         <local:QuestionControl Grid.Row="1"/>
-        <TextBlock Text="7/8" Grid.Row="2" Style="{StaticResource questionNumber}"/>
+        <TextBlock Text="{Binding QuestionNumber}" Grid.Row="2" Style="{StaticResource questionNumber}"/>
         <Button Content="&lt;" Command="{Binding Previous}" HorizontalAlignment="Left" Grid.Row="3" Style="{StaticResource navigationButtons}"/>
         <Button Content="Delete" Command="{Binding Delete}" HorizontalAlignment="Center" Grid.Row="3" Style="{StaticResource actionButtons}"/>
         <Button Content="&gt;" Command="{Binding Next}" HorizontalAlignment="Right" Grid.Row="3" Style="{StaticResource navigationButtons}"/>
