@@ -18,8 +18,8 @@ namespace Test_Creator.Model
         public int CorrectAnswer { get => correctAnswer; }
 
         public Question(){
-            this.questionContent = "";
-            this.answers = new string[4] { "", "", "", "" };
+            this.questionContent = "Question";
+            this.answers = new string[4] { "Answer 1", "Answer 2", "Answer 3", "Answer 4" };
             this.correctAnswer = 0;
         }
 
@@ -28,6 +28,7 @@ namespace Test_Creator.Model
             this.questionContent = questionContent;
             this.answers = answers;
             this.correctAnswer = correctAnswer;
+            Console.WriteLine("UPDATE QUESTION");
         }
     }
 }

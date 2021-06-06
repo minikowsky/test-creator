@@ -12,10 +12,11 @@ namespace Test_Creator.ViewModel
 
     class CreatorViewModel : BaseViewModel
     {
-        private List<Model.Question> questions;
+        private List<Model.Question> questions = new List<Question>();
         public CreatorViewModel()
         {
             questions.Add(new Model.Question());
+            loadQuestion();
         }
 
         #region Test to edit
@@ -62,6 +63,7 @@ namespace Test_Creator.ViewModel
 
         # region Question control
         private string question, answer1, answer2, answer3, answer4;
+        private bool radioButton1, radioButton2, radioButton3, radioButton4;
         public string Question { get => question;
             set
             {
@@ -110,17 +112,49 @@ namespace Test_Creator.ViewModel
             }
         }
         private int correct;
-        private ICommand correctAnswer;
-        public ICommand CorrectAnswer
+        public bool RadioButton1
         {
-            get
+            get => radioButton1;
+            set
             {
-                return correctAnswer ?? (correctAnswer = new RelayCommand(
-                    p => { 
-                        correct = Int32.Parse(p.ToString());
-                        saveToModel();
-                    }, 
-                    p => true));
+                radioButton1 = value;
+                onPropertyChanged(nameof(RadioButton1));
+                correct = 1;
+                saveToModel();
+                
+            }
+        }
+        public bool RadioButton2
+        {
+            get => radioButton2;
+            set
+            {
+                radioButton2 = value;
+                onPropertyChanged(nameof(RadioButton2));
+                correct = 2;
+                saveToModel();
+            }
+        }
+        public bool RadioButton3
+        {
+            get => radioButton3;
+            set
+            {
+                radioButton3 = value;
+                onPropertyChanged(nameof(RadioButton3));
+                correct = 3;
+                saveToModel();
+            }
+        }
+        public bool RadioButton4
+        {
+            get => radioButton4;
+            set
+            {
+                radioButton4 = value;
+                onPropertyChanged(nameof(RadioButton4));
+                correct = 4;
+                saveToModel();
             }
         }
         private void saveToModel()
@@ -136,13 +170,30 @@ namespace Test_Creator.ViewModel
             answer2 = questions[current].Answers[1];
             answer3 = questions[current].Answers[2];
             answer4 = questions[current].Answers[3];
+            switch (questions[current].CorrectAnswer)
+            {
+                case 1:
+                    RadioButton1 = true;
+                    break;
+                case 2:
+                    RadioButton2 = true;
+                    break;
+                case 3:
+                    RadioButton3 = true;
+                    break;
+                case 4:
+                    RadioButton4 = true;
+                    break;
+                default:
+                    break;
+            }
 
         }
         #endregion
 
         #region Title and question number
         //Title
-        private string testTitle;
+        private string testTitle = "Test Title";
         public string TestTitle
         {
             get => testTitle;
@@ -210,9 +261,12 @@ namespace Test_Creator.ViewModel
                     Console.WriteLine(correct);
                     current++;
                     if (current > total)
+                    {
                         total++;
-                    else
-                        loadQuestion();
+                        questions.Add(new Model.Question());
+                    }
+
+                    loadQuestion();
                     onPropertyChanged(nameof(QuestionNumber));
                 }, p => true));
             }

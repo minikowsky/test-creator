@@ -69,12 +69,33 @@ namespace Test_Creator.View
         }
 
         //Radio Buttons
-        public static readonly DependencyProperty CorrectAnswerProperty =
-           DependencyProperty.Register(nameof(CorrectAnswer), typeof(ICommand), typeof(QuestionControl));
-        public ICommand CorrectAnswer
+        public static readonly DependencyProperty RadioButton1Property =
+           DependencyProperty.Register(nameof(RadioButton1), typeof(bool), typeof(QuestionControl));
+        public bool RadioButton1
         {
-            get => (ICommand)GetValue(CorrectAnswerProperty);
-            set => SetValue(CorrectAnswerProperty, value);
+            get => (bool)GetValue(RadioButton1Property);
+            set => SetValue(RadioButton1Property, value);
+        }
+        public static readonly DependencyProperty RadioButton2Property =
+           DependencyProperty.Register(nameof(RadioButton2), typeof(bool), typeof(QuestionControl));
+        public bool RadioButton2
+        {
+            get => (bool)GetValue(RadioButton2Property);
+            set => SetValue(RadioButton2Property, value);
+        }
+        public static readonly DependencyProperty RadioButton3Property =
+           DependencyProperty.Register(nameof(RadioButton3), typeof(bool), typeof(QuestionControl));
+        public bool RadioButton3
+        {
+            get => (bool)GetValue(RadioButton3Property);
+            set => SetValue(RadioButton3Property, value);
+        }
+        public static readonly DependencyProperty RadioButton4Property =
+           DependencyProperty.Register(nameof(RadioButton4), typeof(bool), typeof(QuestionControl));
+        public bool RadioButton4
+        {
+            get => (bool)GetValue(RadioButton1Property);
+            set => SetValue(RadioButton1Property, value);
         }
     }
 }

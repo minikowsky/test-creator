@@ -33,11 +33,10 @@
         <Button Content="Save" Command ="{Binding Save}" HorizontalAlignment="Right" Grid.Row="0" Style="{StaticResource actionButtons}"/>
         <local:QuestionControl Grid.Row="1"
                                Question="{Binding Question, Mode=TwoWay}"
-                               Answer1="{Binding Answer1, Mode=TwoWay}"
-                               Answer2="{Binding Answer2, Mode=TwoWay}"
-                               Answer3="{Binding Answer3, Mode=TwoWay}"
-                               Answer4="{Binding Answer4, Mode=TwoWay}"
-                               CorrectAnswer="{Binding CorrectAnswer}"/>
+                               RadioButton1="{Binding RadioButton1, Mode=TwoWay}" Answer1="{Binding Answer1, Mode=TwoWay}"
+                               RadioButton2="{Binding RadioButton2, Mode=TwoWay}" Answer2="{Binding Answer2, Mode=TwoWay}"
+                               RadioButton3="{Binding RadioButton3, Mode=TwoWay}" Answer3="{Binding Answer3, Mode=TwoWay}"
+                               RadioButton4="{Binding RadioButton4, Mode=TwoWay}" Answer4="{Binding Answer4, Mode=TwoWay}"/>
         <TextBlock Text="{Binding QuestionNumber}" Grid.Row="2" Style="{StaticResource questionNumber}"/>
         <Button Content="&lt;" Command="{Binding Previous}" HorizontalAlignment="Left" Grid.Row="3" Style="{StaticResource navigationButtons}"/>
         <Button Content="Delete" Command="{Binding Delete}" HorizontalAlignment="Center" Grid.Row="3" Style="{StaticResource actionButtons}"/>
