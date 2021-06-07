@@ -8,6 +8,8 @@ using Test_Creator.Model;
 namespace Test_Creator.ViewModel
 {
     using BaseClass;
+    using Microsoft.Win32;
+    using System.IO;
     using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Input;
@@ -68,7 +70,14 @@ namespace Test_Creator.ViewModel
                     if (isCompleted())
                     {
                         string text = testToText();
-                        Console.WriteLine(text);
+                        SaveFileDialog saveFileDialog = new SaveFileDialog()
+                        {
+                            Filter = "Text Files(*.txt)|*.txt"
+                        };
+                        if(saveFileDialog.ShowDialog()==true)
+                        {
+                            File.WriteAllText(saveFileDialog.FileName, text);
+                        }
                     }
                     else
                         MessageBox.Show("Test is incomplete or incorrect!");
@@ -96,11 +105,10 @@ namespace Test_Creator.ViewModel
         }
         private string testToText()
         {
-            string text;
-            text = testTitle + "\n";
+            string text = testTitle;
             for (int i = 0; i <= total; i++)
             {
-                text += questions[i].ToString();
+                text += "\n"+ questions[i].ToString();
             }
             return text;
         }

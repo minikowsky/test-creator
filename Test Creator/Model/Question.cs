@@ -38,7 +38,7 @@ namespace Test_Creator.Model
                 else s += "0|";
                 s += answers[i] + "\n";
             }
-            s += "**********\n";
+            s += "**********";
             return s;
         }
     }
