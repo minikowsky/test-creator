@@ -8,6 +8,8 @@ using Test_Creator.Model;
 namespace Test_Creator.ViewModel
 {
     using BaseClass;
+    using System.Text.RegularExpressions;
+    using System.Windows;
     using System.Windows.Input;
 
     class CreatorViewModel : BaseViewModel
@@ -21,7 +23,7 @@ namespace Test_Creator.ViewModel
 
         #region Test to edit
         // Test to edit
-        private string testFile;
+        private string testFile="";
         public string TestFile { 
             set 
             {
@@ -30,12 +32,31 @@ namespace Test_Creator.ViewModel
             } }
         private void loadTestToEdit(string tf)
         {
-            //TODO:
+            questions = new List<Question>();
+            string[] lines = Regex.Split(tf, "[\r\n]+");
+            TestTitle = lines[0];
+            total = -1;
+            for (int i = 1; i < lines.Length; i += 6)
+            {
+                string[] a = new string[4] { "", "", "", "" };
+                questions.Add(new Model.Question());
+                int correctAnswer = 0;
+                for (int j = 1; j <= 4; j++)
+                {
+                    if (lines[i + j][0] == '1') correctAnswer = j;
+                    a[j - 1] = lines[i + j].Substring(2);
+                }
+                questions[questions.Count - 1].UpdateData(lines[i], a, correctAnswer);
+                total++;
+            }
+            loadQuestion();
+            onPropertyChanged(nameof(QuestionNumber));
 
         }
         #endregion
         
         #region Save to file
+
         //Save
         private ICommand save;
         public ICommand Save
@@ -44,20 +65,44 @@ namespace Test_Creator.ViewModel
             {
                 return save ?? (save = new RelayCommand(p =>
                 {
-                    string text = testToText();
-                }, p => isCompleted()));
+                    if (isCompleted())
+                    {
+                        string text = testToText();
+                        Console.WriteLine(text);
+                    }
+                    else
+                        MessageBox.Show("Test is incomplete or incorrect!");
+                    
+                }, p => true));
             }
         }
         private bool isCompleted()
         {
-            //checks if all questions have answers and correctanswers   
-            
-            return false;
+            saveToModel();
+            //checks if all questions have answers and correctanswers 
+            bool toReturn = true; 
+            if (testTitle.Equals("Test Title")|| testTitle.Equals("")) toReturn=false;
+            for (int i = 0; i <= total; i++)
+            {
+                if (questions[i].QuestionContent.Equals("Question")|| questions[i].QuestionContent[questions[i].QuestionContent.Length-1]!='?') toReturn = false;
+                for (int j = 0; j < 4; j++)
+                {
+                    if (questions[i].Answers[j].Equals("Answer " + (j + 1).ToString()) || questions[i].Answers[j].Equals("")) toReturn = false;
+                }
+                if (questions[i].CorrectAnswer == 0) toReturn = false;
+                
+            }
+            return toReturn;
         }
         private string testToText()
         {
-            //TODO:
-            return "";
+            string text;
+            text = testTitle + "\n";
+            for (int i = 0; i <= total; i++)
+            {
+                text += questions[i].ToString();
+            }
+            return text;
         }
         #endregion  
 
@@ -69,7 +114,6 @@ namespace Test_Creator.ViewModel
             {
                 question = value;
                 onPropertyChanged(nameof(Question));
-                
             }
         }
         public string Answer1 { get => answer1;
@@ -77,7 +121,6 @@ namespace Test_Creator.ViewModel
             {
                 answer1 = value;
                 onPropertyChanged(nameof(Answer1));
-                
             }
         }
         public string Answer2
@@ -116,7 +159,6 @@ namespace Test_Creator.ViewModel
                 radioButton1 = value;
                 onPropertyChanged(nameof(RadioButton1));
                 correct = 1;
-                
             }
         }
         public bool RadioButton2
@@ -144,7 +186,6 @@ namespace Test_Creator.ViewModel
             get => radioButton4;
             set
             {
-                Console.WriteLine("Hehehehe");
                 radioButton4 = value;
                 onPropertyChanged(nameof(RadioButton4));
                 correct = 4;
@@ -185,7 +226,6 @@ namespace Test_Creator.ViewModel
                     correct = 0;
                     break;
             }
-
         }
         #endregion
 
@@ -207,7 +247,6 @@ namespace Test_Creator.ViewModel
         #endregion
 
         #region Navigation and delete
-        //Delete button
         private ICommand delete;
         public ICommand Delete
         {
@@ -215,7 +254,6 @@ namespace Test_Creator.ViewModel
             {
                 return delete ?? (delete = new RelayCommand(p =>
                 {
-                    Console.WriteLine("delete");
                     questions.RemoveAt(current);
                     if (current == total) current--;
                     total--;
@@ -238,9 +276,7 @@ namespace Test_Creator.ViewModel
             {
                 return previous ?? (previous = new RelayCommand(p =>
                 {
-                    Console.WriteLine("save to model");
                     saveToModel();
-                    Console.WriteLine("previous");
                     current--;
                     onPropertyChanged(nameof(QuestionNumber));
                     loadQuestion();
@@ -272,7 +308,6 @@ namespace Test_Creator.ViewModel
                         total++;
                         questions.Add(new Model.Question());
                     }
-
                     loadQuestion();
                     onPropertyChanged(nameof(QuestionNumber));
                 }, p => true));

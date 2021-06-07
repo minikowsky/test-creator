@@ -28,7 +28,18 @@ namespace Test_Creator.Model
             this.questionContent = questionContent;
             this.answers = answers;
             this.correctAnswer = correctAnswer;
-            Console.WriteLine("UPDATE QUESTION");
+        }
+        public override string ToString()
+        {
+            string s = questionContent + "\n";
+            for(int i = 0; i < 4; i++)
+            {
+                if (correctAnswer == i+1) s += "1|";
+                else s += "0|";
+                s += answers[i] + "\n";
+            }
+            s += "**********\n";
+            return s;
         }
     }
 }
