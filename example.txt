@@ -1,4 +1,4 @@
-Tytuł testu
+Tytuł przykładowego testu
 Treść pytania nr 1?
 0|odpowiedź błędna
 0|odpowiedź błędna
@@ -6,6 +6,18 @@ Treść pytania nr 1?
 1|odpowiedź poprawna
 **********
 Treść pytania nr 2?
+0|odpowiedź błędna
+0|odpowiedź błędna
+1|odpowiedź poprawna
+0|odpowiedź błędna
+**********
+Treść pytania nr 3?
+1|odpowiedź błędna
+0|odpowiedź błędna
+0|odpowiedź poprawna
+0|odpowiedź błędna
+**********
+Treść pytania nr 4?
 0|odpowiedź błędna
 0|odpowiedź błędna
 1|odpowiedź poprawna

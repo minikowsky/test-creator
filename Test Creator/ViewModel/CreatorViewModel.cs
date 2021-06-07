@@ -80,7 +80,7 @@ namespace Test_Creator.ViewModel
                         }
                     }
                     else
-                        MessageBox.Show("Test is incomplete or incorrect!");
+                        MessageBox.Show("Test is incomplete or incorrect!","Error");
                     
                 }, p => true));
             }
