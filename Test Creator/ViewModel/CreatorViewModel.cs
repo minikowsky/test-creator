@@ -69,7 +69,6 @@ namespace Test_Creator.ViewModel
             {
                 question = value;
                 onPropertyChanged(nameof(Question));
-                saveToModel();
                 
             }
         }
@@ -78,7 +77,7 @@ namespace Test_Creator.ViewModel
             {
                 answer1 = value;
                 onPropertyChanged(nameof(Answer1));
-                saveToModel();
+                
             }
         }
         public string Answer2
@@ -88,7 +87,6 @@ namespace Test_Creator.ViewModel
             {
                 answer2 = value;
                 onPropertyChanged(nameof(Answer2));
-                saveToModel();
             }
         }
         public string Answer3
@@ -98,7 +96,6 @@ namespace Test_Creator.ViewModel
             {
                 answer3 = value;
                 onPropertyChanged(nameof(Answer3));
-                saveToModel();
             }
         }
         public string Answer4
@@ -108,7 +105,6 @@ namespace Test_Creator.ViewModel
             {
                 answer4 = value;
                 onPropertyChanged(nameof(Answer4));
-                saveToModel();
             }
         }
         private int correct;
@@ -120,7 +116,6 @@ namespace Test_Creator.ViewModel
                 radioButton1 = value;
                 onPropertyChanged(nameof(RadioButton1));
                 correct = 1;
-                saveToModel();
                 
             }
         }
@@ -132,7 +127,6 @@ namespace Test_Creator.ViewModel
                 radioButton2 = value;
                 onPropertyChanged(nameof(RadioButton2));
                 correct = 2;
-                saveToModel();
             }
         }
         public bool RadioButton3
@@ -143,7 +137,6 @@ namespace Test_Creator.ViewModel
                 radioButton3 = value;
                 onPropertyChanged(nameof(RadioButton3));
                 correct = 3;
-                saveToModel();
             }
         }
         public bool RadioButton4
@@ -151,10 +144,10 @@ namespace Test_Creator.ViewModel
             get => radioButton4;
             set
             {
+                Console.WriteLine("Hehehehe");
                 radioButton4 = value;
                 onPropertyChanged(nameof(RadioButton4));
                 correct = 4;
-                saveToModel();
             }
         }
         private void saveToModel()
@@ -165,11 +158,15 @@ namespace Test_Creator.ViewModel
         }
         private void loadQuestion()
         {
-            question = questions[current].QuestionContent;
-            answer1 = questions[current].Answers[0];
-            answer2 = questions[current].Answers[1];
-            answer3 = questions[current].Answers[2];
-            answer4 = questions[current].Answers[3];
+            Question = questions[current].QuestionContent;
+            Answer1 = questions[current].Answers[0];
+            Answer2 = questions[current].Answers[1];
+            Answer3 = questions[current].Answers[2];
+            Answer4 = questions[current].Answers[3];
+            RadioButton1 = false;
+            RadioButton2 = false;
+            RadioButton3 = false;
+            RadioButton4 = false;
             switch (questions[current].CorrectAnswer)
             {
                 case 1:
@@ -185,6 +182,7 @@ namespace Test_Creator.ViewModel
                     RadioButton4 = true;
                     break;
                 default:
+                    correct = 0;
                     break;
             }
 
@@ -218,6 +216,12 @@ namespace Test_Creator.ViewModel
                 return delete ?? (delete = new RelayCommand(p =>
                 {
                     Console.WriteLine("delete");
+                    questions.RemoveAt(current);
+                    if (current == total) current--;
+                    total--;
+                    
+                    loadQuestion();
+                    onPropertyChanged(nameof(QuestionNumber));
 
                 }, p =>
                 {
@@ -233,7 +237,9 @@ namespace Test_Creator.ViewModel
             get
             {
                 return previous ?? (previous = new RelayCommand(p =>
-                { 
+                {
+                    Console.WriteLine("save to model");
+                    saveToModel();
                     Console.WriteLine("previous");
                     current--;
                     onPropertyChanged(nameof(QuestionNumber));
@@ -252,7 +258,8 @@ namespace Test_Creator.ViewModel
             get
             {
                 return next ?? (next = new RelayCommand(p =>
-                { 
+                {
+                    saveToModel();
                     Console.WriteLine(question);
                     Console.WriteLine(answer1);
                     Console.WriteLine(answer2);
