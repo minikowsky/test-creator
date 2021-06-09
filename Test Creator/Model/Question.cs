@@ -41,7 +41,7 @@ namespace Test_Creator.Model
             s += "**********";
             return s;
         }
-        public bool isCompleted()
+        public bool HasAllValues()
         {
             if (questionContent.Equals("Question") || questionContent[questionContent.Length - 1] != '?') return false;
             for (int j = 0; j < 4; j++)

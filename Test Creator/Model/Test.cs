@@ -10,7 +10,8 @@ namespace Test_Creator.Model
     class Test
     {
         private List<Model.Question> questions = new List<Question>();
-        public string Title { get; set; }
+        private string title = "Test Title";
+        public string Title { get => title; set { title = value; } }
         public void AddQuestion(Model.Question question)
         {
             questions.Add(question);
@@ -49,6 +50,24 @@ namespace Test_Creator.Model
                 question.UpdateData(lines[i], a, correctAnswer);
                 this.AddQuestion(question);
             }
+        }
+        public bool IsCompleted()
+        {
+            if (title.Equals("Test Title") || title.Equals("")) return false;
+            for (int i = 0; i < GetNumberOfQuestions(); i++)
+            {
+                if (!questions[i].HasAllValues()) return false;
+            }
+            return true;
+        }
+        public override string ToString()
+        {
+            string text = title;
+            for (int i = 0; i < GetNumberOfQuestions(); i++)
+            {
+                text += "\n" + questions[i].ToString();
+            }
+            return text;
         }
     }
 }

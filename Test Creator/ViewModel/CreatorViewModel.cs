@@ -43,9 +43,10 @@ namespace Test_Creator.ViewModel
             {
                 return save ?? (save = new RelayCommand(p =>
                 {
-                    if (isCompleted())
+                    saveQuestion();
+                    if (test.IsCompleted())
                     {
-                        string text = testToText();
+                        string text = test.ToString();
                         SaveFileDialog saveFileDialog = new SaveFileDialog()
                         {
                             Filter = "Text Files(*.txt)|*.txt"
@@ -61,27 +62,6 @@ namespace Test_Creator.ViewModel
                 }, p => true));
             }
         }
-        private bool isCompleted()
-        {
-            saveToModel();
-            //checks if all questions have answers and correctanswers 
-            bool toReturn = true; 
-            if (testTitle.Equals("Test Title")|| testTitle.Equals("")) toReturn=false;
-            for(int i=0; i< test.GetNumberOfQuestions(); i++)
-            {
-                if (!test.GetQuestion(i).isCompleted()) toReturn = false;
-            }
-            return toReturn;
-        }
-        private string testToText()
-        {
-            string text = testTitle;
-            for (int i = 0; i < test.GetNumberOfQuestions(); i++)
-            {
-                text += "\n"+ test.GetQuestion(i).ToString();
-            }
-            return text;
-        }
         #endregion  
 
         # region Question control
@@ -94,7 +74,8 @@ namespace Test_Creator.ViewModel
                 onPropertyChanged(nameof(Question));
             }
         }
-        public string Answer1 { get => answer1;
+        public string Answer1 { 
+            get => answer1;
             set
             {
                 answer1 = value;
@@ -169,7 +150,7 @@ namespace Test_Creator.ViewModel
                 correct = 4;
             }
         }
-        private void saveToModel()
+        private void saveQuestion()
         {
             string[] answers = new string[4] { answer1, answer2, answer3, answer4 };
 
@@ -209,13 +190,12 @@ namespace Test_Creator.ViewModel
 
         #region Title and question number
         //Title
-        private string testTitle = "Test Title";
         public string TestTitle
         {
-            get => testTitle;
+            get => test.Title;
             set
             {
-                testTitle = value;
+                test.Title = value;
                 onPropertyChanged(nameof(TestTitle));
             }
         }
@@ -233,7 +213,8 @@ namespace Test_Creator.ViewModel
                 return delete ?? (delete = new RelayCommand(p =>
                 {
                     test.RemoveQuestion(current);
-                    if (current > test.GetNumberOfQuestions()-1) current--;
+                    if (current > test.GetNumberOfQuestions()-1)
+                        current--;
                     
                     loadQuestion();
                     onPropertyChanged(nameof(QuestionNumber));
@@ -253,10 +234,10 @@ namespace Test_Creator.ViewModel
             {
                 return previous ?? (previous = new RelayCommand(p =>
                 {
-                    saveToModel();
+                    saveQuestion();
                     current--;
-                    onPropertyChanged(nameof(QuestionNumber));
                     loadQuestion();
+                    onPropertyChanged(nameof(QuestionNumber));
                 }, p => 
                 { 
                     if (current == 0) return false;
@@ -272,7 +253,7 @@ namespace Test_Creator.ViewModel
             {
                 return next ?? (next = new RelayCommand(p =>
                 {
-                    saveToModel();
+                    saveQuestion();
                     current++;
                     if (current > test.GetNumberOfQuestions() - 1)
                     {
