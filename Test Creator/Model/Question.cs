@@ -41,5 +41,15 @@ namespace Test_Creator.Model
             s += "**********";
             return s;
         }
+        public bool isCompleted()
+        {
+            if (questionContent.Equals("Question") || questionContent[questionContent.Length - 1] != '?') return false;
+            for (int j = 0; j < 4; j++)
+            {
+                if (answers[j].Equals("Answer " + (j + 1).ToString()) || answers[j].Equals("")) return false;
+            }
+            if (correctAnswer == 0) return false;
+            return true;
+        }
     }
 }

@@ -16,44 +16,20 @@ namespace Test_Creator.ViewModel
 
     class CreatorViewModel : BaseViewModel
     {
-        private List<Model.Question> questions = new List<Question>();
+        private Test test = new Test();
         public CreatorViewModel()
         {
-            questions.Add(new Model.Question());
+            test.AddQuestion(new Model.Question());
             loadQuestion();
         }
 
         #region Test to edit
         // Test to edit
-        private string testFile="";
-        public string TestFile { 
-            set 
-            {
-                testFile = value;
-                loadTestToEdit(testFile);
-            } }
-        private void loadTestToEdit(string tf)
+        public void LoadTestToEdit(string t)
         {
-            questions = new List<Question>();
-            string[] lines = Regex.Split(tf, "[\r\n]+");
-            TestTitle = lines[0];
-            total = -1;
-            for (int i = 1; i < lines.Length; i += 6)
-            {
-                string[] a = new string[4] { "", "", "", "" };
-                questions.Add(new Model.Question());
-                int correctAnswer = 0;
-                for (int j = 1; j <= 4; j++)
-                {
-                    if (lines[i + j][0] == '1') correctAnswer = j;
-                    a[j - 1] = lines[i + j].Substring(2);
-                }
-                questions[questions.Count - 1].UpdateData(lines[i], a, correctAnswer);
-                total++;
-            }
+            test.Load(t);
             loadQuestion();
             onPropertyChanged(nameof(QuestionNumber));
-
         }
         #endregion
         
@@ -91,24 +67,18 @@ namespace Test_Creator.ViewModel
             //checks if all questions have answers and correctanswers 
             bool toReturn = true; 
             if (testTitle.Equals("Test Title")|| testTitle.Equals("")) toReturn=false;
-            for (int i = 0; i <= total; i++)
+            for(int i=0; i< test.GetNumberOfQuestions(); i++)
             {
-                if (questions[i].QuestionContent.Equals("Question")|| questions[i].QuestionContent[questions[i].QuestionContent.Length-1]!='?') toReturn = false;
-                for (int j = 0; j < 4; j++)
-                {
-                    if (questions[i].Answers[j].Equals("Answer " + (j + 1).ToString()) || questions[i].Answers[j].Equals("")) toReturn = false;
-                }
-                if (questions[i].CorrectAnswer == 0) toReturn = false;
-                
+                if (!test.GetQuestion(i).isCompleted()) toReturn = false;
             }
             return toReturn;
         }
         private string testToText()
         {
             string text = testTitle;
-            for (int i = 0; i <= total; i++)
+            for (int i = 0; i < test.GetNumberOfQuestions(); i++)
             {
-                text += "\n"+ questions[i].ToString();
+                text += "\n"+ test.GetQuestion(i).ToString();
             }
             return text;
         }
@@ -203,20 +173,20 @@ namespace Test_Creator.ViewModel
         {
             string[] answers = new string[4] { answer1, answer2, answer3, answer4 };
 
-            questions[current].UpdateData(question, answers, correct);
+            test.GetQuestion(current).UpdateData(question, answers, correct);
         }
         private void loadQuestion()
         {
-            Question = questions[current].QuestionContent;
-            Answer1 = questions[current].Answers[0];
-            Answer2 = questions[current].Answers[1];
-            Answer3 = questions[current].Answers[2];
-            Answer4 = questions[current].Answers[3];
+            Question = test.GetQuestion(current).QuestionContent;
+            Answer1 = test.GetQuestion(current).Answers[0];
+            Answer2 = test.GetQuestion(current).Answers[1];
+            Answer3 = test.GetQuestion(current).Answers[2];
+            Answer4 = test.GetQuestion(current).Answers[3];
             RadioButton1 = false;
             RadioButton2 = false;
             RadioButton3 = false;
             RadioButton4 = false;
-            switch (questions[current].CorrectAnswer)
+            switch (test.GetQuestion(current).CorrectAnswer)
             {
                 case 1:
                     RadioButton1 = true;
@@ -250,8 +220,8 @@ namespace Test_Creator.ViewModel
             }
         }
         //Question number
-        private int current = 0, total = 0;
-        public string QuestionNumber { get => $"{current+1}/{total+1}";}
+        private int current = 0;
+        public string QuestionNumber { get => $"{current+1}/{test.GetNumberOfQuestions()}";}
         #endregion
 
         #region Navigation and delete
@@ -262,16 +232,15 @@ namespace Test_Creator.ViewModel
             {
                 return delete ?? (delete = new RelayCommand(p =>
                 {
-                    questions.RemoveAt(current);
-                    if (current == total) current--;
-                    total--;
+                    test.RemoveQuestion(current);
+                    if (current > test.GetNumberOfQuestions()-1) current--;
                     
                     loadQuestion();
                     onPropertyChanged(nameof(QuestionNumber));
 
                 }, p =>
                 {
-                    if (total == 0) return false;
+                    if (test.GetNumberOfQuestions() == 0) return false;
                     return true;
                 }));
             }
@@ -304,17 +273,10 @@ namespace Test_Creator.ViewModel
                 return next ?? (next = new RelayCommand(p =>
                 {
                     saveToModel();
-                    Console.WriteLine(question);
-                    Console.WriteLine(answer1);
-                    Console.WriteLine(answer2);
-                    Console.WriteLine(answer3);
-                    Console.WriteLine(answer4);
-                    Console.WriteLine(correct);
                     current++;
-                    if (current > total)
+                    if (current > test.GetNumberOfQuestions() - 1)
                     {
-                        total++;
-                        questions.Add(new Model.Question());
+                        test.AddQuestion(new Model.Question());
                     }
                     loadQuestion();
                     onPropertyChanged(nameof(QuestionNumber));

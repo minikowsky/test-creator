@@ -21,8 +21,7 @@ namespace Test_Creator.ViewModel
             get
             {
                 return createTest ?? (createTest = new RelayCommand(
-                    p => { Console.WriteLine("Create!");
-                        
+                    p => { 
                         var creatorWindow = new View.CreatorWindow();
                         creatorWindow.Show();
                         this.CloseWindow();
@@ -36,7 +35,7 @@ namespace Test_Creator.ViewModel
             get
             {
                 return editTest ?? (editTest = new RelayCommand(
-                    p => { Console.WriteLine("Edit!");
+                    p => {
                         var fileDialog = new OpenFileDialog();
                         fileDialog.DefaultExt = ".png";
                         fileDialog.Filter = "Text Files (*.txt)|*.txt";
@@ -47,7 +46,8 @@ namespace Test_Creator.ViewModel
                             if (isFileCorrect(text))
                             {
                                 var creatorWindow = new View.CreatorWindow();
-                                creatorWindow.creatorViewModel.TestFile = text; 
+                                //creatorWindow.creatorViewModel.TestFile = text;
+                                creatorWindow.creatorViewModel.LoadTestToEdit(text);
                                 creatorWindow.Show();
                                 this.CloseWindow();
                             }
